@@ -1,0 +1,17 @@
+[project]
+name = "ai-agent-toolkit"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "libaice", email = "libaice147@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = []
+
+[project.scripts]
+ai-agent-toolkit = "ai_agent_toolkit:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
