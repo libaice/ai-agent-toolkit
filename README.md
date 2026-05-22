@@ -1,6 +1,6 @@
 # AI Agent Toolkit
 
-A Python toolkit for building AI agents powered by [Anthropic Claude](https://www.anthropic.com/), with support for tool use and real-time data queries.
+A Python toolkit for building AI agents powered by [Anthropic Claude](https://www.anthropic.com/), featuring both raw API usage and [LangGraph](https://langchain-ai.github.io/langgraph/)-based agent workflows.
 
 ## Requirements
 
@@ -19,13 +19,7 @@ uv sync
 
 ## Configuration
 
-Copy the `.env` template and fill in your API key:
-
-```bash
-cp .env .env.local   # optional, or edit .env directly
-```
-
-Edit `.env`:
+Edit `.env` and fill in your API key:
 
 ```env
 ANTHROPIC_API_KEY=your_api_key_here
@@ -35,22 +29,26 @@ ANTHROPIC_API_KEY=your_api_key_here
 
 ## Usage
 
-Run the agent with `uv`:
+### Basic LLM Agent (`__init__.py`)
+
+Demonstrates raw Anthropic API usage with manual tool-use loop:
 
 ```bash
 uv run ai-agent-toolkit
 ```
 
-Add a new dependency:
+### LangGraph Agent (`langgraph_agent.py`)
+
+Demonstrates a ReAct agent built with LangGraph + LangChain Anthropic:
+
+```bash
+uv run python src/ai_agent_toolkit/langgraph_agent.py
+```
+
+### Add a dependency
 
 ```bash
 uv add <package-name>
-```
-
-Run a one-off script without modifying the project:
-
-```bash
-uv run --with <package-name> python your_script.py
 ```
 
 ## Project Structure
@@ -59,10 +57,11 @@ uv run --with <package-name> python your_script.py
 ai-agent-toolkit/
 ├── src/
 │   └── ai_agent_toolkit/
-│       └── __init__.py   # main entry point & agent logic
-├── .env                  # API keys (not committed to git)
-├── pyproject.toml        # project metadata & dependencies
-└── uv.lock               # locked dependency versions
+│       ├── __init__.py          # Basic Anthropic API + manual tool-use loop
+│       └── langgraph_agent.py   # LangGraph ReAct agent
+├── .env                         # API keys (not committed to git)
+├── pyproject.toml               # Project metadata & dependencies
+└── uv.lock                      # Locked dependency versions
 ```
 
 ## Development
