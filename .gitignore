@@ -13,4 +13,4 @@ wheels/
 .claude/
 .antigravity/knowledge_base/
 
-knowledge_base/
+knowledge_base/eval_results.json
