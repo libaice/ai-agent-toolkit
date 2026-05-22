@@ -11,4 +11,4 @@ wheels/
 .env
 .env.local
 .claude/
-.antigravity/
+.antigravity/knowledge_base/

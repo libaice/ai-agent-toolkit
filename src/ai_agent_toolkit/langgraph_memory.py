@@ -90,8 +90,15 @@ def call_llm(state: AgentState):
 """
 
     messages = [SystemMessage(content=system)] + state["messages"]
+
+    # 只保留最近 10 条消息，防止 token 累积触发速率限制
+    MAX_MESSAGES = 10
+    if len(messages) > MAX_MESSAGES + 1:  # +1 是 SystemMessage
+        messages = [messages[0]] + messages[-(MAX_MESSAGES):]
+
     response = llm.invoke(messages)
     return {"messages": [response]}
+
 
 
 def update_memory(state: AgentState):
