@@ -1,44 +1,79 @@
 # AI Agent Toolkit
 
-A small Python package for experimenting with AI agent tooling.
+A Python toolkit for building AI agents powered by [Anthropic Claude](https://www.anthropic.com/), with support for tool use and real-time data queries.
 
 ## Requirements
 
-- Python 3.14 or newer
+- Python 3.14+
+- [uv](https://docs.astral.sh/uv/) (package manager)
 
 ## Installation
 
-Install the project in editable mode from the repository root:
+Clone the repo and install dependencies using `uv`:
 
 ```bash
-pip install -e .
+git clone https://github.com/libaice/ai-agent-toolkit.git
+cd ai-agent-toolkit
+uv sync
 ```
+
+## Configuration
+
+Copy the `.env` template and fill in your API key:
+
+```bash
+cp .env .env.local   # optional, or edit .env directly
+```
+
+Edit `.env`:
+
+```env
+ANTHROPIC_API_KEY=your_api_key_here
+```
+
+> Get your API key from [console.anthropic.com](https://console.anthropic.com/).
 
 ## Usage
 
-After installation, run the command-line entry point:
+Run the agent with `uv`:
 
 ```bash
-ai-agent-toolkit
+uv run ai-agent-toolkit
 ```
 
-The current CLI prints:
+Add a new dependency:
 
-```text
-Hello from ai-agent-toolkit!
+```bash
+uv add <package-name>
 ```
 
-You can also call the package directly from Python:
+Run a one-off script without modifying the project:
 
-```python
-from ai_agent_toolkit import main
+```bash
+uv run --with <package-name> python your_script.py
+```
 
-main()
+## Project Structure
+
+```
+ai-agent-toolkit/
+├── src/
+│   └── ai_agent_toolkit/
+│       └── __init__.py   # main entry point & agent logic
+├── .env                  # API keys (not committed to git)
+├── pyproject.toml        # project metadata & dependencies
+└── uv.lock               # locked dependency versions
 ```
 
 ## Development
 
-Project metadata is defined in `pyproject.toml`, and package source lives under `src/ai_agent_toolkit`.
+All project metadata is defined in `pyproject.toml`. The package source lives under `src/ai_agent_toolkit/`.
+
+To add a new dependency:
+
+```bash
+uv add <package>
+```
 
 ## License
 
