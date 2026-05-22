@@ -1,6 +1,6 @@
 # AI Agent Toolkit
 
-A Python toolkit for building AI agents powered by [Anthropic Claude](https://www.anthropic.com/), featuring both raw API usage and [LangGraph](https://langchain-ai.github.io/langgraph/)-based agent workflows.
+A Python toolkit for building AI agents powered by [Anthropic Claude](https://www.anthropic.com/), featuring raw API usage, [LangGraph](https://langchain-ai.github.io/langgraph/)-based single agents, and multi-agent workflows.
 
 ## Requirements
 
@@ -31,18 +31,26 @@ ANTHROPIC_API_KEY=your_api_key_here
 
 ### Basic LLM Agent (`__init__.py`)
 
-Demonstrates raw Anthropic API usage with manual tool-use loop:
+Demonstrates raw Anthropic API usage with a manual tool-use loop:
 
 ```bash
 uv run ai-agent-toolkit
 ```
 
-### LangGraph Agent (`langgraph_agent.py`)
+### LangGraph Single Agent (`langgraph_agent.py`)
 
-Demonstrates a ReAct agent built with LangGraph + LangChain Anthropic:
+A ReAct-style agent built with LangGraph + LangChain Anthropic, using `app.stream()` to observe each node's output step by step:
 
 ```bash
 uv run python src/ai_agent_toolkit/langgraph_agent.py
+```
+
+### Multi-Agent Workflow (`multi_agent.py`)
+
+A multi-agent system where specialized sub-agents (market data search, report writing, email sending) collaborate via a LangGraph StateGraph:
+
+```bash
+uv run python src/ai_agent_toolkit/multi_agent.py
 ```
 
 ### Add a dependency
@@ -58,7 +66,8 @@ ai-agent-toolkit/
 ├── src/
 │   └── ai_agent_toolkit/
 │       ├── __init__.py          # Basic Anthropic API + manual tool-use loop
-│       └── langgraph_agent.py   # LangGraph ReAct agent
+│       ├── langgraph_agent.py   # LangGraph single ReAct agent with streaming
+│       └── multi_agent.py       # Multi-agent workflow with specialized sub-agents
 ├── .env                         # API keys (not committed to git)
 ├── pyproject.toml               # Project metadata & dependencies
 └── uv.lock                      # Locked dependency versions

@@ -73,11 +73,17 @@ graph.add_edge("execute_tools", "call_llm")
 
 def main() -> None:
     app = graph.compile()
-    result = app.invoke(
-        {"messages": [{"role": "user", "content": "BTC 和 ETH 今天哪个更强"}]}
-    )
-    print(result["messages"][-1].content)
+    # result = app.invoke(
+        # {"messages": [{"role": "user", "content": "BTC 和 ETH 今天哪个更强"}]}
+    # )
+    # print(result["messages"][-1].content)
+
+    for chunk in app.stream({"messages": [{"role": "user", "content": "分析 BTC 和 ETH 今天哪个更强"}]}):
+        for node_name, node_output in chunk.items():
+            print(f"节点 [{node_name}] 输出:", node_output)
 
 
 if __name__ == "__main__":
     main()
+
+
