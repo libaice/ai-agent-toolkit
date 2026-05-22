@@ -8,6 +8,7 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "anthropic" },
+    { name = "httpx" },
     { name = "langchain-anthropic" },
     { name = "langgraph" },
     { name = "python-dotenv" },
@@ -16,6 +17,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "anthropic", specifier = ">=0.104.0" },
+    { name = "httpx", specifier = ">=0.28.1" },
     { name = "langchain-anthropic", specifier = ">=1.4.3" },
     { name = "langgraph", specifier = ">=1.2.1" },
     { name = "python-dotenv", specifier = ">=1.2.2" },
