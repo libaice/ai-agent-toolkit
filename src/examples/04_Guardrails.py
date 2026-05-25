@@ -52,6 +52,11 @@ def run_with_guardrails(market_data: dict, max_retries: int = 2):
         return None
 
     print("[Input guardrail passed]")
+
+    # init messages
+    messages = [
+        {"role": "user", "content": f"Analyze: {json.dumps(market_data)}"}
+    ]
     for attempt in range(max_retries + 1):
         print(f"\nAttempt {attempt + 1}...")
 
@@ -70,13 +75,27 @@ def run_with_guardrails(market_data: dict, max_retries: int = 2):
                 {"role": "user", "content": f"Analyze: {json.dumps(market_data)}"}
             ],
         )
-        content = response.content[0].text
-        print("Model response:", content)
+        raw = response.content[0].text.strip()
+
+      
+
+        if raw.startswith("```json"):
+            raw = raw[7:]
+        if raw.startswith("```"):
+            raw = raw[3:]
+        if raw.endswith("```"):
+            raw = raw[:-3]
+        raw = raw.strip()
+
+        print("Model response:", raw)
 
         try:
-            decision = PMDecision.model_validate_json(response.content[0].text)
+            decision = PMDecision.model_validate_json(raw)
         except Exception as e:
             print(f"Parse error: {e}")
+            # 把失败原因加进 messages，下次重试带着
+            messages.append({"role": "assistant", "content": raw})
+            messages.append({"role": "user", "content": f"Your output was invalid JSON: {e}. Output ONLY raw JSON, no markdown."})
             continue
         
         valid, reason = output_guardrail(decision)
